@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="UserDAO">
+
+<!-- 회원가입시 아이디 중복 확인 -->
+	<select id="idcheck" parameterType="String" resultType="int">
+		select count(user_id) from user where user_id = #{id}
+	</select>
+	
+<!-- 회원가입시 이메일 중복 확인 -->
+	<select id="emailcheck" parameterType="String" resultType="int">
+		select count(user_email) from user where user_email = #{email}
+	</select>
+<!-- 회원가입 insert -->
+	<insert id="join" parameterType="UserDTO">
+		<selectKey keyProperty="user_num" resultType="int" order="BEFORE">select max(ifnull(user_num, 0))+1 from user</selectKey>
+		insert into user values (#{user_num}, #{user_id}, #{user_pwd}, #{user_name}, #{user_email})
+	</insert>
+<!-- 로그인 시 비밀번호 맞는지 확인 -->
+	<select id="pwdcheck" parameterType="String" resultType="String">
+		select user_pwd from user where user_id = #{id}
+	</select>
+	
+<!-- 비밀번호 찾기 이메일 체크 -->
+	<select id="emailsearch" parameterType="String" resultType="int">
+		select count(user_email) from user where user_email = #{email}
+	</select>
+<!-- 세션 값 등록할 유저 정보 가져오기 -->
+	<select id="userinfo" parameterType="String" resultType="UserDTO">
+		select * from user where user_id = #{id}
+	</select>
+<!-- pwd 이메일 전송 -->
+	<select id="pwd" parameterType="String" resultType="String">
+		select user_pwd from user where user_email = #{email}
+	</select>
+<!-- 유저 정보 업데이트 -->
+	<update id="userupdate" parameterType="UserDTO">
+		update user set user_pwd = #{user_pwd}, user_name=#{user_name}, user_email=#{user_email} where user_id = #{user_id}
+	</update>
+	
+</mapper>
+
+
+
+
+
