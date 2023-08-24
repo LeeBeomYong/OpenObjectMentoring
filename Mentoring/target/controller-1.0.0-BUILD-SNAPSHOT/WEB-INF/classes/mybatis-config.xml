@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "https://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+<!-- DTO -->
+		<typeAlias type="org.spring.dto.UserDTO" alias="UserDTO"/>
+		<typeAlias type="org.spring.dto.BoardDTO" alias="BoardDTO"/>
+		
+<!-- DAO -->
+		<typeAlias type="org.spring.dao.UserDAO" alias="UserDAO"/>
+		<typeAlias type="org.spring.dao.BoardDAO" alias="BoardDAO"/>
+		<typeAlias type="org.spring.dao.AdminUserDAO" alias="AdminUserDAO"/>
+		<typeAlias type="org.spring.dao.AdminBoardDAO" alias="AdminBoardDAO"/>
+		
+<!-- 검색 -->
+		<typeAlias type="org.spring.dto.SearchCondition" alias="SearchCondition"/>
+	</typeAliases>
+	
+</configuration>
