@@ -9,19 +9,19 @@ import org.junit.Test;
 public class dbTest {
 	
 	 private static final String DRIVER = "org.mariadb.jdbc.Driver";
-	 private static final String URL = "jdbc:mysql://127.0.0.1:3306/test"; // jdbc:mysql://127.0.0.1:3306/¿©·¯ºÐÀÌ ¸¸µå½Å ½ºÅ°¸¶ÀÌ¸§
-	 private static final String USER = "root"; //DB »ç¿ëÀÚ¸í
-	 private static final String PW = "1234";   //DB »ç¿ëÀÚ ºñ¹Ð¹ø
+	 private static final String URL = "jdbc:mysql://127.0.0.1:3306/test"; 
+	 private static final String USER = "root"; 
+	 private static final String PW = "1234";   
 	 
 	@Test
 	public void test() throws Exception {
 		Class.forName(DRIVER);
 		  
 		  try(Connection con = DriverManager.getConnection(URL, USER, PW)){
-		   System.out.println("¼º°ø");
+		   System.out.println("ï¿½ï¿½ï¿½ï¿½");
 		   System.out.println(con);
 		  }catch (Exception e) {
-		   System.out.println("¿¡·¯¹ß»ý");
+		   System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ß»ï¿½");
 		   e.printStackTrace();
 		  }
 	}
