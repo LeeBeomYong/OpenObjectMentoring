@@ -21,7 +21,7 @@ public class DBConnectionTest {
     	
         try (Connection con = ds.getConnection()) {
  
-            System.out.println("\nDB¿¬°á ¼º°ø !!\n");
+            System.out.println("dbì—°ê²°ì„±ê³µ");
  
         } catch (Exception e) {
             e.printStackTrace();
