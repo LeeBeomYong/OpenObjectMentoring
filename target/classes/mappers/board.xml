@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardDAO">
+
+<!-- 게시판 목록 리스트 -->
+<select id="select_page" parameterType="map" resultType="BoardDTO">
+	select * from board order by board_regdate desc, board_id desc LIMIT #{offset}, #{pageSize}
+</select>
+
+<!-- 게시판 상세 내용 -->
+<select id="board_cont" parameterType="int" resultType="BoardDTO">
+	select * from board where board_id = #{no}
+</select>
+
+<!-- 게시판 게시글 등록 -->
+<insert id="board_insert" parameterType="BoardDTO">
+	<selectKey keyProperty="board_id" resultType="int" order="BEFORE">select max(ifnull(board_id, 0))+1 from board</selectKey>
+	insert into board values (#{board_id}, #{board_title},#{board_content}, #{board_writer}, NOW(), 0)
+</insert>
+
+<!-- 게시글 삭제하기 -->
+<delete id="board_delete" parameterType="int">
+	delete from board where board_id = #{no}
+</delete>
+
+<!-- 게시글 수정하기 -->
+<update id="board_update" parameterType="BoardDTO">
+	update board set board_title = #{board_title}, board_content=#{board_content} where board_id=#{board_id}
+</update>
+
+<!-- 게시글 조회수 추가 -->
+<update id="board_cnt" parameterType="int">
+	update board set board_cnt = board_cnt+1 where board_id = #{no}
+</update>
+
+<update id="board_minus" parameterType="int">
+	update board set board_id = board_id-1 where board_id > #{no};
+</update>
+
+<select id="board_count" resultType="int">
+	select count(*) from board
+</select>
+
+<!-- 검색 -->
+<select id="searchSelectPage" parameterType="SearchCondition" resultType="BoardDTO">
+	select * from board where true 
+	<choose>
+		<when test='option=="T"'>
+			and board_title like concat('%', #{keyword}, '%') 
+		</when>
+		<when test='option=="W"'>
+			and board_writer like concat('%', #{keyword}, '%') 
+		</when>
+		<otherwise>
+			and board_title like concat('%', #{keyword}, '%')
+			or board_writer like concat('%', #{keyword}, '%')
+		</otherwise>
+	</choose>
+	order by board_id desc LIMIT #{offset}, #{pageSize}
+</select>
+
+<!-- 검색 카운트 -->
+<select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
+	select count(*) from board where true 
+	<choose>
+		<when test='option=="T"'>
+			and board_title like concat('%', #{keyword}, '%') 
+		</when>
+		<when test='option=="W"'>
+			and board_writer like concat('%', #{keyword}, '%') 
+		</when>
+		<otherwise>
+			and board_title like concat('%', #{keyword}, '%')
+			or board_writer like concat('%', #{keyword}, '%')
+		</otherwise>
+	</choose>
+</select>
+
+
+</mapper>

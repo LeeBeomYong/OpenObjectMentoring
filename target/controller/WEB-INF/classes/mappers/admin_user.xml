@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdminUserDAO">
+
+<!-- 관리자가 유저 리스트 불러오면서 검색 -->
+<select id="userList" parameterType="SearchCondition" resultType="UserDTO">
+	select * from user where true
+	<choose>
+		<when test='option=="i"'>
+			and user_id like concat('%', #{keyword}, '%')
+		</when>
+		<when test='option=="e"'>
+			and user_email like concat('%', #{keyword}, '%')
+		</when>
+		<when test='option=="n"'>
+			and user_name like concat('%', #{keyword}, '%')
+		</when>
+	</choose>
+	order by user_num desc LIMIT #{offset}, #{pageSize}
+</select>
+
+<!-- 검색에 필요한 유저 수 확인 -->
+<select id="userListcount" parameterType="SearchCondition" resultType="int">
+	select count(*) from user where true
+	<choose>
+		<when test='option=="i"'>
+			and user_id like concat('%', #{keyword}, '%')
+		</when>
+		<when test='option=="e"'>
+			and user_email like concat('%', #{keyword}, '%')
+		</when>
+		<when test='option=="n"'>
+			and user_name like concat('%', #{keyword}, '%')
+		</when>
+	</choose>
+</select>
+
+<!-- 사용자 정보 -->
+<select id="admin_userInfo" parameterType="int" resultType="UserDTO">
+	select * from user where user_num = #{no}
+</select>
+
+<!-- 사용자 삭제 -->
+<delete id="userDelete" parameterType="int">
+	delete from user where user_num = #{no}
+</delete>
+
+<update id="userNumUpdate" parameterType="int">
+	update user set user_num = user_num-1 where user_num > #{no};
+</update>
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="AdminBoardDAO">
+
+<!-- 관리자가 유저 리스트 불러오면서 검색 -->
+<select id="admin_board_list" parameterType="SearchCondition" resultType="BoardDTO">
+	select * from board where true
+	<choose>
+		<when test='option=="A"'>
+			and board_title like concat('%', #{keyword}, '%')
+			or board_writer like concat('%', #{keyword}, '%')
+		</when>
+		<when test='option=="T"'>
+			and board_title like concat('%', #{keyword}, '%')
+		</when>
+		<when test='option=="W"'>
+			and board_writer like concat('%', #{keyword}, '%')
+		</when>
+	</choose>
+	order by board_id desc LIMIT #{offset}, #{pageSize}
+</select>
+
+<!-- 검색에 필요한 유저 수 확인 -->
+<select id="admin_board_count" parameterType="SearchCondition" resultType="int">
+	select count(*) from board where true
+	<choose>
+		<when test='option=="A"'>
+			and board_title like concat('%', #{keyword}, '%')
+			or board_writer like concat('%', #{keyword}, '%')
+		</when>
+		<when test='option=="T"'>
+			and board_title like concat('%', #{keyword}, '%')
+		</when>
+		<when test='option=="W"'>
+			and board_writer like concat('%', #{keyword}, '%')
+		</when>
+	</choose>
+</select>
+</mapper>
