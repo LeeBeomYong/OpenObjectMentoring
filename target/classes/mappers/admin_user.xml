@@ -45,7 +45,7 @@
 <delete id="userDelete" parameterType="int">
 	delete from user where user_num = #{no}
 </delete>
-
+<!-- 사용자 삭제 후 번호 바꾸기2 -->
 <update id="userNumUpdate" parameterType="int">
 	update user set user_num = user_num-1 where user_num > #{no};
 </update>
