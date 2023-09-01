@@ -6,7 +6,6 @@ public class BoardDTO {
 	private String board_title;
 	private String board_content;
 	private String board_writer;
-	//zz
 	private String board_regdate;
 	private int board_cnt;
 	
