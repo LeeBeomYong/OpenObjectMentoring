@@ -49,7 +49,7 @@ public class BoardDTO {
 	public BoardDTO() {
 		
 	}
-	
+	// 인텔리제이 깃허브 테스트
 	public BoardDTO(int board_id, String board_title, String board_content, String board_writer, String board_regdate,
 			int board_cnt) {
 		this.board_id = board_id;
@@ -59,7 +59,4 @@ public class BoardDTO {
 		this.board_regdate = board_regdate;
 		this.board_cnt = board_cnt;
 	}
-	
 }
-
-
